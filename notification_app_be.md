@@ -32,7 +32,7 @@ Retrieves a paginated list of notifications for the authenticated user.
 # Stage 2
 
 **Persistent Storage Choice:**
-I recommend a **Relational Database (PostgreSQL)**. Notifications are highly structured data with strict relationships to Users (Students). Furthermore, transactional integrity (ACID compliance) is critical for features like "mark as read"—we cannot risk race conditions where a notification shows as unread on one device and read on another due to eventual consistency delays typical in NoSQL databases.
+I recommend a **Relational Database (MySQL)**. 
 
 **Database Schema:**
 ```
