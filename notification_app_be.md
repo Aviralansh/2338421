@@ -64,3 +64,14 @@ Yes, the given query is accurate, it feteches all the unread notification from a
 It's slow beacuse the query is going through all the rows one by one. Also it's sorting the result as if the `where` clause wasn't already O(n) lol.
 
 To solve this, we can use indexing.
+
+
+
+---
+
+
+# Stage 4
+
+Reddis, we can use caching and store top 40 recent notificationis and unread count, this will reduse the load on primary db.
+
+
