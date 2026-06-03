@@ -22,3 +22,30 @@ Retrieves a paginated list of notifications for the authenticated user.
 * **Headers:**
   * `Authorization: Bearer <JWT_TOKEN>`
   * `Content-Type: application/json`
+
+
+
+---
+
+
+
+# Stage 2
+
+**Persistent Storage Choice:**
+I recommend a **Relational Database (PostgreSQL)**. Notifications are highly structured data with strict relationships to Users (Students). Furthermore, transactional integrity (ACID compliance) is critical for features like "mark as read"—we cannot risk race conditions where a notification shows as unread on one device and read on another due to eventual consistency delays typical in NoSQL databases.
+
+**Database Schema:**
+```
+CREATE TABLE notifications (
+    notification_id UUID PRIMARY KEY,
+    student_id INT NOT NULL,
+    notification_type VARCHAR(50) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);```
+
+As the size of unread notification will increase, quering this huge database will become more slower and slower, to solve this we can move very old unread-notification to seperate storage somewhere else.
+
+Read Notification : `UPDATE notifications SET is_read = true WHERE notification_id = ?;`
