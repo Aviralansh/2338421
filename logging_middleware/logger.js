@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const TOKEN = process.env.LOGGING_AUTH_TOKEN;
-const LOR_URL = process.env.LOR_URL;
+const LOG_URL = process.env.LOG_URL;
 
 async function Log(stack, level, pkg, message) {
     try {
