@@ -75,3 +75,25 @@ To solve this, we can use indexing.
 Reddis, we can use caching and store top 40 recent notificationis and unread count, this will reduse the load on primary db.
 
 
+
+---
+
+
+
+# Stage 5
+
+The schrtcomming here is syncronisation, the for loop worrks squientially, if the one API request gets stuck, it would pause the whole program.
+
+No, the event of sending email and inserting into DB should be kept different, as inserting into DB is faster as compare to relying on 3rd party email sender API.
+
+### Updated Psedocode
+```
+async function notify_all(student_ids: array, message: str):
+    save_to_db(student_ids, message)
+    for student_id in student_ids:
+        aysnc send_email(student_id, message)
+
+    for student_id in student_ids:
+        async push_to_app(student_id, message)
+
+```
